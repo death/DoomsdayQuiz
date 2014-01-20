@@ -21,6 +21,7 @@ public class QuizFragment extends Fragment {
 	private View mRootView;
 	private Calendar mChosenDay;
 	private Handler mHandler;
+	private Options mOptions;
 
 	final private int[] mAnswerButtons = new int[] {
 			R.id.sunday,
@@ -40,6 +41,7 @@ public class QuizFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.fragment_quiz, container, false);
 
+		mOptions = new Options(getActivity());
 		newQuiz();
 
 		for (int i = 0; i < mAnswerButtons.length; i++) {
@@ -62,22 +64,29 @@ public class QuizFragment extends Fragment {
 		return format.format(date.getTime());
 	}
 
-	static private Calendar startOfYear() {
+	static private Calendar startOfYear(int year) {
 		Calendar day = Calendar.getInstance();
-		day.set(day.get(Calendar.YEAR), Calendar.JANUARY, 1);
+		day.set(year == 0 ? day.get(Calendar.YEAR) : year, Calendar.JANUARY, 1);
 		return day;
 	}
 
-	static private Calendar chooseRandomDay() {
-		Calendar day = startOfYear();
+	static private Calendar chooseRandomDay(int year) {
+		Calendar day = startOfYear(year);
 		int daysInYear = day.getActualMaximum(Calendar.DAY_OF_YEAR);
 		int k = (int)Math.floor(Math.random() * daysInYear);
 		day.add(Calendar.DAY_OF_YEAR, k);
 		return day;
 	}
 
+	static private int chooseRandomYear() {
+		int endYear = 2099;
+		int startYear = 1900;
+		return (int)Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
+	}
+
 	private void newQuiz() {
-		mChosenDay = chooseRandomDay();
+		int year = mOptions.getBoolean("quiz_this_year", true) ? 0 : chooseRandomYear();
+		mChosenDay = chooseRandomDay(year);
 
 		TextView dateText = (TextView)mRootView.findViewById(R.id.date);
 		dateText.setText(formatDate(mChosenDay));
