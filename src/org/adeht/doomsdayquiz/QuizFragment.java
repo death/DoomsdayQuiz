@@ -1,10 +1,5 @@
 package org.adeht.doomsdayquiz;
 
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class QuizFragment extends Fragment {
+	private Quiz mQuiz;
 	private View mRootView;
-	private Calendar mChosenDay;
 	private Handler mHandler;
 	private Options mOptions;
 
@@ -34,6 +29,7 @@ public class QuizFragment extends Fragment {
 	};
 
 	public QuizFragment() {
+		mQuiz = null;
 		mHandler = new Handler();
 	}
 
@@ -42,7 +38,12 @@ public class QuizFragment extends Fragment {
 		mRootView = inflater.inflate(R.layout.fragment_quiz, container, false);
 
 		mOptions = new Options(getActivity());
-		newQuiz();
+		if (mQuiz == null) {
+			mQuiz = new Quiz();
+			newDate();
+		} else {
+			setDateText();
+		}
 
 		for (int i = 0; i < mAnswerButtons.length; i++) {
 			int buttonId = mAnswerButtons[i];
@@ -59,43 +60,20 @@ public class QuizFragment extends Fragment {
 		return mRootView;
 	}
 
-	static private String formatDate(Calendar date) {
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-		return format.format(date.getTime());
+	private void newDate() {
+		mQuiz.newDate(mOptions.getBoolean("quiz_this_year", true));
+		setDateText();
 	}
 
-	static private Calendar startOfYear(int year) {
-		Calendar day = Calendar.getInstance();
-		day.set(year == 0 ? day.get(Calendar.YEAR) : year, Calendar.JANUARY, 1);
-		return day;
-	}
-
-	static private Calendar chooseRandomDay(int year) {
-		Calendar day = startOfYear(year);
-		int daysInYear = day.getActualMaximum(Calendar.DAY_OF_YEAR);
-		int k = (int)Math.floor(Math.random() * daysInYear);
-		day.add(Calendar.DAY_OF_YEAR, k);
-		return day;
-	}
-
-	static private int chooseRandomYear() {
-		int endYear = 2099;
-		int startYear = 1900;
-		return (int)Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
-	}
-
-	private void newQuiz() {
-		int year = mOptions.getBoolean("quiz_this_year", true) ? 0 : chooseRandomYear();
-		mChosenDay = chooseRandomDay(year);
-
+	private void setDateText() {
 		TextView dateText = (TextView)mRootView.findViewById(R.id.date);
-		dateText.setText(formatDate(mChosenDay));
+		dateText.setText(mQuiz.getDate());
 	}
 
 	private void answer(int index) {
 		setAllEnabled(false);
 
-		int dow = mChosenDay.get(Calendar.DAY_OF_WEEK) - 1;
+		int dow = mQuiz.getDayOfWeek() - 1;
 
 		final Button goodButton = (Button)mRootView.findViewById(mAnswerButtons[dow]);
 		final Drawable goodButtonBackground = goodButton.getBackground();
@@ -116,7 +94,8 @@ public class QuizFragment extends Fragment {
 					selectedButton.setBackgroundDrawable(selectedButtonBackground);
 
 				setAllEnabled(true);
-				newQuiz();
+
+				newDate();
 			}
 		}, 2000);
 	}
