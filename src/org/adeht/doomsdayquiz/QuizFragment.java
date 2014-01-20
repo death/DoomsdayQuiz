@@ -61,7 +61,7 @@ public class QuizFragment extends Fragment {
 	}
 
 	private void newDate() {
-		mQuiz.newDate(mOptions.getBoolean("quiz_this_year", true));
+		mQuiz.newDate(mOptions.getQuizThisYear());
 		setDateText();
 	}
 

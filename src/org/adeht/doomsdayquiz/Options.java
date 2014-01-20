@@ -12,11 +12,19 @@ public class Options {
 		mPrefs = context.getSharedPreferences(PREFS_NAME, 0);
 	}
 
-	public boolean getBoolean(String name, boolean defaultValue) {
+	public boolean getQuizThisYear() {
+		return getBoolean("quiz_this_year", true);
+	}
+
+	public void setQuizThisYear(boolean newValue) {
+		setBoolean("quiz_this_year", newValue);
+	}
+
+	private boolean getBoolean(String name, boolean defaultValue) {
 		return mPrefs.getBoolean(name, defaultValue);
 	}
 
-	public void setBoolean(String name, boolean value) {
+	private void setBoolean(String name, boolean value) {
 		SharedPreferences.Editor editor = mPrefs.edit();
 		editor.putBoolean(name, value);
 		editor.commit();

@@ -18,12 +18,12 @@ public class OptionsFragment extends Fragment {
 
 		final Options options = new Options(getActivity());
 		final CheckBox checkBox = (CheckBox)rootView.findViewById(R.id.checkbox_quiz_this_year);
-		checkBox.setChecked(options.getBoolean("quiz_this_year", true));
+		checkBox.setChecked(options.getQuizThisYear());
 		checkBox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				boolean checked = checkBox.isChecked();
-				options.setBoolean("quiz_this_year", checked);
+				options.setQuizThisYear(checked);
 			}
 		});
 
