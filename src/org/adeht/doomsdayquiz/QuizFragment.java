@@ -84,6 +84,8 @@ public class QuizFragment extends Fragment {
 	}
 
 	private void answer(int index) {
+		setAllEnabled(false);
+
 		int dow = mChosenDay.get(Calendar.DAY_OF_WEEK) - 1;
 
 		final Button goodButton = (Button)mRootView.findViewById(mAnswerButtons[dow]);
@@ -104,8 +106,16 @@ public class QuizFragment extends Fragment {
 				if (goodButton != selectedButton)
 					selectedButton.setBackgroundDrawable(selectedButtonBackground);
 
+				setAllEnabled(true);
 				newQuiz();
 			}
 		}, 2000);
+	}
+
+	private void setAllEnabled(boolean enabled) {
+		for (int i = 0; i < mAnswerButtons.length; i++) {
+			Button button = (Button)mRootView.findViewById(mAnswerButtons[i]);
+			button.setEnabled(enabled);
+		}
 	}
 }
