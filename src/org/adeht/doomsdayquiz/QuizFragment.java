@@ -42,7 +42,7 @@ public class QuizFragment extends Fragment {
 			mQuiz = new Quiz();
 			newDate();
 		} else {
-			setDateText();
+			setTexts();
 		}
 
 		for (int i = 0; i < mAnswerButtons.length; i++) {
@@ -62,12 +62,16 @@ public class QuizFragment extends Fragment {
 
 	private void newDate() {
 		mQuiz.newDate(mOptions.getQuizThisYear());
-		setDateText();
+		setTexts();
 	}
 
-	private void setDateText() {
+	private void setTexts() {
 		TextView dateText = (TextView)mRootView.findViewById(R.id.date);
 		dateText.setText(mQuiz.getDate());
+
+		TextView statusText = (TextView)mRootView.findViewById(R.id.status);
+		statusText.setText(String.format("Current: %d Longest: %d",
+				mOptions.getCurrentStreak(), mOptions.getLongestStreak()));
 	}
 
 	private void answer(int index) {
@@ -90,8 +94,12 @@ public class QuizFragment extends Fragment {
 			@Override
 			public void run() {
 				goodButton.setBackgroundDrawable(goodButtonBackground);
-				if (goodButton != selectedButton)
+				if (goodButton != selectedButton) {
 					selectedButton.setBackgroundDrawable(selectedButtonBackground);
+					mOptions.resetCurrentStreak();
+				} else {
+					mOptions.extendCurrentStreak();
+				}
 
 				setAllEnabled(true);
 

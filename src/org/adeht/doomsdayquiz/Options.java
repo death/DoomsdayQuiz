@@ -20,6 +20,34 @@ public class Options {
 		setBoolean("quiz_this_year", newValue);
 	}
 
+	public void resetCurrentStreak() {
+		setInt("current_streak", 0);
+	}
+
+	public int getCurrentStreak() {
+		return getInt("current_streak", 0);
+	}
+
+	public void resetLongestStreak() {
+		setInt("longest_streak", 0);
+	}
+
+	public int getLongestStreak() {
+		return getInt("longest_streak", 0);
+	}
+
+	public void extendCurrentStreak() {
+		int current = getCurrentStreak();
+		int longest = getLongestStreak();
+
+		int newCurrent = current + 1;
+		int newLongest = Math.max(longest, newCurrent);
+
+		setInt("current_streak", newCurrent);
+		if (newLongest > longest)
+			setInt("longest_streak", newLongest);
+	}
+
 	private boolean getBoolean(String name, boolean defaultValue) {
 		return mPrefs.getBoolean(name, defaultValue);
 	}
@@ -27,6 +55,16 @@ public class Options {
 	private void setBoolean(String name, boolean value) {
 		SharedPreferences.Editor editor = mPrefs.edit();
 		editor.putBoolean(name, value);
+		editor.commit();
+	}
+
+	private int getInt(String name, int defaultValue) {
+		return mPrefs.getInt(name, defaultValue);
+	}
+
+	private void setInt(String name, int value) {
+		SharedPreferences.Editor editor = mPrefs.edit();
+		editor.putInt(name, value);
 		editor.commit();
 	}
 }

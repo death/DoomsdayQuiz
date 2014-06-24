@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 public class OptionsFragment extends Fragment {
@@ -24,6 +25,15 @@ public class OptionsFragment extends Fragment {
 			public void onClick(View view) {
 				boolean checked = checkBox.isChecked();
 				options.setQuizThisYear(checked);
+			}
+		});
+
+		Button button = (Button)rootView.findViewById(R.id.button_reset_streaks);
+		button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				options.resetCurrentStreak();
+				options.resetLongestStreak();
 			}
 		});
 

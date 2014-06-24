@@ -14,13 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="40sp" />
+        android:textSize="20sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/date"
         android:text="@string/sunday"
         android:id="@+id/sunday" />
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/sunday"
         android:text="@string/monday"
         android:id="@+id/monday" />
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/monday"
         android:text="@string/tuesday"
         android:id="@+id/tuesday" />
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/tuesday"
         android:text="@string/wednesday"
         android:id="@+id/wednesday" />
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/wednesday"
         android:text="@string/thursday"
         android:id="@+id/thursday" />
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/thursday"
         android:text="@string/friday"
         android:id="@+id/friday" />
@@ -74,8 +74,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="23sp"
+        android:textSize="20sp"
         android:layout_below="@id/friday"
         android:text="@string/saturday"
         android:id="@+id/saturday" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_below="@id/saturday"
+        android:id="@+id/status" />
 </RelativeLayout>
